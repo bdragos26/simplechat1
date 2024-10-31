@@ -80,7 +80,11 @@ public class ChatClient extends AbstractClient
             return;
 
           case "#sethost":
-            setHost(command[1]);
+            if (!isConnected()) {
+              setHost(command[1]);
+            } else {
+              clientUI.display("Cannot change host while connected.");
+            }
             return;
 
           case "#setport":
@@ -136,7 +140,7 @@ public class ChatClient extends AbstractClient
   //pentru exceptii
   @Override
   protected void connectionException(Exception exception) {
-    System.out.println("Eroare la conexiune");
+    System.out.println("Eroare la conexiune, serverul s-a inchis");
     System.exit(200);
   }
   /**
